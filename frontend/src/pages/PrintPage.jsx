@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import api from '../services/api';
 import './PrintPage.css';
 
-// ✅ NOUVEAUX TARIFS MIS À JOUR
+// NOUVEAUX TARIFS MIS À JOUR
 const PRICING = { 
-  bw: { label: 'Noir & Blanc', price: 0.50, icon: '⚫' }, 
-  color: { label: 'Couleur', price: 1.00, icon: '🎨' } 
+  bw: { label: 'Noir & Blanc', price: 0.50, icon: '' }, 
+  color: { label: 'Couleur', price: 1.00, icon: '' } 
 };
 
 const PrintPage = () => {
@@ -25,7 +25,7 @@ const PrintPage = () => {
       setPageCount(0); 
       setOrderSuccess(false);
     } else { 
-      setError('⚠️ Veuillez sélectionner un fichier PDF valide.'); 
+      setError('Veuillez sélectionner un fichier PDF valide.'); 
       setFile(null); 
     }
   };
@@ -95,7 +95,7 @@ const PrintPage = () => {
             <label htmlFor="pdf-upload" className="file-label">
               {file ? (
                 <span style={{display:'flex', alignItems:'center', gap:'0.5rem'}}>
-                  📄 {file.name}
+                  {file.name}
                 </span>
               ) : (
                 <span style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'0.75rem'}}>
@@ -123,7 +123,7 @@ const PrintPage = () => {
               <label className={`radio-card ${colorMode === 'bw' ? 'active' : ''}`} onClick={() => setColorMode('bw')}>
                 <input type="radio" name="mode" value="bw" checked={colorMode === 'bw'} readOnly />
                 <div className="radio-content">
-                  <span className="radio-icon">⚫</span>
+                  <span className="radio-icon bw-indicator"></span>
                   <span className="radio-title">Noir & Blanc</span>
                   <span className="radio-price">0.50 DH / page</span>
                 </div>
@@ -132,7 +132,7 @@ const PrintPage = () => {
               <label className={`radio-card ${colorMode === 'color' ? 'active' : ''}`} onClick={() => setColorMode('color')}>
                 <input type="radio" name="mode" value="color" checked={colorMode === 'color'} readOnly />
                 <div className="radio-content">
-                  <span className="radio-icon">🎨</span>
+                  <span className="radio-icon color-indicator"></span>
                   <span className="radio-title">Couleur</span>
                   <span className="radio-price">1.00 DH / page</span>
                 </div>
@@ -155,7 +155,7 @@ const PrintPage = () => {
             </div>
 
             <button className="btn-order" onClick={handleOrder} disabled={loading}>
-              {loading ? 'Traitement en cours...' : '✅ Passer commande'}
+              {loading ? 'Traitement en cours...' : 'Passer commande'}
             </button>
           </section>
         )}
@@ -163,7 +163,6 @@ const PrintPage = () => {
         {/* Message de Succès Animé */}
         {orderSuccess && (
           <div className="card success-card">
-            <div style={{fontSize:'3rem', marginBottom:'1rem'}}>🎉</div>
             <h2>Commande confirmée !</h2>
             <p>Votre document <strong>{file?.name}</strong> ({pageCount} pages en {PRICING[colorMode].label}) a été enregistré avec succès.</p>
             <p className="success-sub">Total facturé : <strong>{totalPrice} DH</strong></p>
