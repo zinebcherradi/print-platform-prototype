@@ -3,11 +3,18 @@ import React, { useState } from 'react';
 import api from '../services/api';
 import './PrintPage.css';
 
-// NOUVEAUX TARIFS MIS À JOUR
-const PRICING = { 
-  bw: { label: 'Noir & Blanc', price: 0.50, icon: '' }, 
-  color: { label: 'Couleur', price: 1.00, icon: '' } 
+const PRICING = {
+  bw: { label: 'Noir & Blanc', price: 0.50 },
+  color: { label: 'Couleur', price: 1.00 }
 };
+
+const PrinterIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="6 9 6 2 18 2 18 9" />
+    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+    <rect x="6" y="14" width="12" height="8" />
+  </svg>
+);
 
 const PrintPage = () => {
   const [file, setFile] = useState(null);
@@ -20,13 +27,13 @@ const PrintPage = () => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type === 'application/pdf') {
-      setFile(selectedFile); 
-      setError(''); 
-      setPageCount(0); 
+      setFile(selectedFile);
+      setError('');
+      setPageCount(0);
       setOrderSuccess(false);
-    } else { 
-      setError('Veuillez sélectionner un fichier PDF valide.'); 
-      setFile(null); 
+    } else {
+      setError('Veuillez sélectionner un fichier PDF valide.');
+      setFile(null);
     }
   };
 
@@ -34,78 +41,65 @@ const PrintPage = () => {
     if (!file) return;
     setLoading(true);
     try {
-      const formData = new FormData(); 
+      const formData = new FormData();
       formData.append('file', file);
-      const res = await api.post('/upload-pdf', formData, { 
-        headers: { 'Content-Type': 'multipart/form-data' } 
-      });
+      const res = await api.post('/upload-pdf', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       setPageCount(res.data.num_pages);
-    } catch (err) { 
-      setError(err.response?.data?.detail || 'Erreur lors de l\'analyse du document'); 
-    } finally { 
-      setLoading(false); 
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Erreur lors de l\'analyse du document');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleOrder = async () => {
     if (!file || pageCount === 0) return;
-    setLoading(true); 
+    setLoading(true);
     setError('');
-    
     try {
-      // Calcul du prix basé sur les nouvelles constantes PRICING
       const finalPrice = parseFloat((pageCount * PRICING[colorMode].price).toFixed(2));
-      
-      await api.post('/order', {
-        filename: file.name,
-        num_pages: pageCount,
-        color_mode: colorMode,
-        total_price: finalPrice
-      });
+      await api.post('/order', { filename: file.name, num_pages: pageCount, color_mode: colorMode, total_price: finalPrice });
       setOrderSuccess(true);
-      setTimeout(() => { 
-        setFile(null); 
-        setPageCount(0); 
-        setOrderSuccess(false); 
-      }, 5000);
-    } catch (err) { 
-      setError(err.response?.data?.detail || 'Erreur lors de la commande. Réessayez.'); 
-    } finally { 
-      setLoading(false); 
+      setTimeout(() => { setFile(null); setPageCount(0); setOrderSuccess(false); }, 5000);
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Erreur lors de la commande. Réessayez.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Calcul temps réel pour l'affichage
   const totalPrice = (pageCount * PRICING[colorMode].price).toFixed(2);
   const handleLogout = () => { localStorage.removeItem('access_token'); window.location.href = '/login'; };
 
   return (
     <div className="print-container">
       <header className="print-header">
-        <h1>Plateforme d'Impression</h1>
+        <div className="brand-mark">
+          <span className="brand-icon"><PrinterIcon /></span>
+          <div className="brand-text">
+            <h1>Plateforme d'Impression</h1>
+            <span className="brand-eyebrow">Espace personnel</span>
+          </div>
+        </div>
         <button onClick={handleLogout} className="logout-btn">Déconnexion</button>
       </header>
 
       <div className="print-workspace">
-        {/* Section Upload */}
         <section className="card upload-section">
-          <h2>1. Votre Document</h2>
+          <h2><span className="step-num">1</span> Votre document</h2>
           <div className="file-input-wrapper">
             <input type="file" accept=".pdf" onChange={handleFileChange} id="pdf-upload" disabled={loading || orderSuccess} />
             <label htmlFor="pdf-upload" className="file-label">
               {file ? (
-                <span style={{display:'flex', alignItems:'center', gap:'0.5rem'}}>
-                  {file.name}
-                </span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>{file.name}</span>
               ) : (
-                <span style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'0.75rem'}}>
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.65rem' }}>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                   Cliquez ou glissez votre PDF ici
                 </span>
               )}
             </label>
           </div>
-          
           {file && !pageCount && !orderSuccess && (
             <button onClick={handleUpload} className="btn-primary" disabled={loading}>
               {loading ? 'Analyse en cours...' : 'Détecter les pages'}
@@ -114,11 +108,9 @@ const PrintPage = () => {
           {error && <p className="error-msg">{error}</p>}
         </section>
 
-        {/* Section Options & Commande */}
         {pageCount > 0 && !orderSuccess && (
           <section className="card options-section">
-            <h2>2. Options d'impression</h2>
-            
+            <h2><span className="step-num">2</span> Options d'impression</h2>
             <div className="radio-group">
               <label className={`radio-card ${colorMode === 'bw' ? 'active' : ''}`} onClick={() => setColorMode('bw')}>
                 <input type="radio" name="mode" value="bw" checked={colorMode === 'bw'} readOnly />
@@ -128,7 +120,6 @@ const PrintPage = () => {
                   <span className="radio-price">0.50 DH / page</span>
                 </div>
               </label>
-
               <label className={`radio-card ${colorMode === 'color' ? 'active' : ''}`} onClick={() => setColorMode('color')}>
                 <input type="radio" name="mode" value="color" checked={colorMode === 'color'} readOnly />
                 <div className="radio-content">
@@ -140,18 +131,9 @@ const PrintPage = () => {
             </div>
 
             <div className="price-summary">
-              <div className="summary-row">
-                <span>Pages détectées :</span>
-                <strong>{pageCount}</strong>
-              </div>
-              <div className="summary-row">
-                <span>Mode choisi :</span>
-                <strong>{PRICING[colorMode].label}</strong>
-              </div>
-              <div className="summary-total">
-                <span>Total estimé :</span>
-                <strong className="total-amount">{totalPrice} DH</strong>
-              </div>
+              <div className="summary-row"><span>Pages détectées :</span><strong>{pageCount}</strong></div>
+              <div className="summary-row"><span>Mode choisi :</span><strong>{PRICING[colorMode].label}</strong></div>
+              <div className="summary-total"><span>Total estimé :</span><strong className="total-amount">{totalPrice} DH</strong></div>
             </div>
 
             <button className="btn-order" onClick={handleOrder} disabled={loading}>
@@ -160,10 +142,9 @@ const PrintPage = () => {
           </section>
         )}
 
-        {/* Message de Succès Animé */}
         {orderSuccess && (
           <div className="card success-card">
-            <h2>Commande confirmée !</h2>
+            <h2>Commande confirmée</h2>
             <p>Votre document <strong>{file?.name}</strong> ({pageCount} pages en {PRICING[colorMode].label}) a été enregistré avec succès.</p>
             <p className="success-sub">Total facturé : <strong>{totalPrice} DH</strong></p>
           </div>
