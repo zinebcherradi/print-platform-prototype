@@ -35,8 +35,8 @@ L'utilisateur peut choisir :
 
 | Option | Prix |
 |---------|------|
-| Noir & Blanc | **0.10 DH / page** |
-| Couleur | **0.25 DH / page** |
+| Noir & Blanc | **0.50 DH / page** |
+| Couleur | **1.00 DH / page** |
 
 Le prix est recalculé automatiquement en temps réel sans rechargement de la page.
 

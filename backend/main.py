@@ -35,7 +35,7 @@ def get_db():
     finally:
         db.close()
 
-# Helper Auth (Récupérer l'user connecté)
+# Helper Auth
 def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Format token invalide")
@@ -97,20 +97,30 @@ async def upload_pdf(file: UploadFile = File(...)):
     return {"filename": file.filename, "num_pages": num_pages}
 
 # ==========================================
-# MILESTONE 3 : CALCUL DU PRIX
+# MILESTONE 3 : CALCUL DU PRIX (NOUVEAUX TARIFS)
 # ==========================================
-PRICE_BW = 0.10
-PRICE_COLOR = 0.25
+# ✅ TARIFS MIS À JOUR ICI
+PRICE_BW = 0.50
+PRICE_COLOR = 1.00
 
 @app.post("/calculate-price")
 def calculate_price_endpoint(pages: int, mode: str):
+    """Tâche #10 : Valide et calcule le prix officiel côté serveur"""
     if mode not in ["bw", "color"]:
-        raise HTTPException(status_code=400, detail="Mode invalide")
+        raise HTTPException(status_code=400, detail="Mode d'impression invalide")
+    
     unit_price = PRICE_COLOR if mode == "color" else PRICE_BW
-    return {"pages": pages, "mode": mode, "unit_price": unit_price, "total": round(pages * unit_price, 2)}
+    total = round(pages * unit_price, 2)
+    
+    return {
+        "pages": pages,
+        "mode": mode,
+        "unit_price": unit_price,
+        "total": total
+    }
 
 # ==========================================
-# MILESTONE 4 : COMMANDE (#12)
+# MILESTONE 4 : COMMANDE
 # ==========================================
 @app.post("/order", response_model=OrderResponse)
 def create_order(order: OrderCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
