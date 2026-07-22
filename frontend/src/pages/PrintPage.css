@@ -1,0 +1,169 @@
+/* frontend/src/pages/PrintPage.css */
+.print-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.print-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 1rem;
+}
+
+.logout-btn {
+  background: transparent;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #dc3545;
+  color: white;
+}
+
+.upload-section {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.file-input-wrapper input[type="file"] {
+  display: none;
+}
+
+.file-label {
+  display: block;
+  padding: 2rem;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.file-label:hover {
+  border-color: #007bff;
+  color: #007bff;
+  background: #f8fafc;
+}
+
+.upload-btn {
+  width: 100%;
+  padding: 1rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: background 0.2s;
+}
+
+.upload-btn:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.upload-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.pdf-info-card {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #dcfce7;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row.highlight {
+  font-size: 1.2rem;
+  color: #166534;
+  margin-top: 0.5rem;
+}
+
+.next-step-text {
+  text-align: center;
+  color: #15803d;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.error-message {
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Styles pour le Milestone 3 */
+.print-workspace { display: grid; gap: 2rem; max-width: 800px; margin: 0 auto; }
+.card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+.btn-primary { width: 100%; padding: 0.75rem; background: #007bff; color: white; border: none; border-radius: 6px; margin-top: 1rem; cursor: pointer; font-weight: 600; }
+.btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+
+/* Cartes d'options interactives */
+.radio-group { display: flex; gap: 1rem; margin: 1.5rem 0; }
+.radio-card { 
+  flex: 1; border: 2px solid #e2e8f0; border-radius: 8px; padding: 1rem; 
+  cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.75rem; 
+}
+.radio-card input { display: none; } /* Cache le bouton radio natif moche */
+.radio-card.active { border-color: #007bff; background: #eff6ff; box-shadow: 0 0 0 2px rgba(0,123,255,0.2); }
+.radio-icon { font-size: 1.5rem; }
+.radio-title { font-weight: 600; display: block; color: #1e293b; }
+.radio-price { font-size: 0.85rem; color: #64748b; }
+
+/* Récapitulatif prix */
+.price-summary { background: #f8fafc; padding: 1.5rem; border-radius: 8px; margin-top: 1rem; border: 1px solid #e2e8f0; }
+.summary-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #475569; }
+.summary-total { display: flex; justify-content: space-between; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #cbd5e1; font-size: 1.2rem; font-weight: bold; color: #1e293b; }
+.total-amount { color: #16a34a; font-size: 1.4rem; }
+
+.btn-order { width: 100%; padding: 1rem; background: #16a34a; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; margin-top: 1.5rem; opacity: 0.6; cursor: not-allowed; }
+.error-msg { color: #dc2626; background: #fef2f2; padding: 0.75rem; border-radius: 6px; margin-top: 1rem; text-align: center; }
+
+/* Styles Milestone 4 - Confirmation & UX */
+.success-card {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.success-card h2 { color: #166534; margin-bottom: 0.5rem; }
+.success-sub { font-size: 1.2rem; color: #15803d; margin-top: 1rem; }
+
+.btn-order:disabled { opacity: 0.7; cursor: wait; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
