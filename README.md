@@ -1,4 +1,4 @@
-# 🖨️ Online Printing Platform
+#  Online Printing Platform
 
 Une plateforme **Full Stack d'impression en ligne** permettant aux utilisateurs de s'authentifier, de téléverser un document PDF, de configurer les options d'impression et de passer une commande avec calcul automatique du prix.
 
@@ -6,9 +6,9 @@ Ce projet a été développé avec une architecture moderne basée sur **FastAPI
 
 ---
 
-## 🚀 Fonctionnalités
+## Fonctionnalités
 
-### 🔐 Authentification sécurisée
+### Authentification sécurisée
 
 - Création de compte
 - Connexion utilisateur
@@ -18,8 +18,7 @@ Ce projet a été développé avec une architecture moderne basée sur **FastAPI
 - Gestion des erreurs d'authentification
 
 ---
-
-### 📄 Téléversement et analyse de PDF
+### Téléversement et analyse de PDF
 
 - Upload de fichiers PDF
 - Validation du type de fichier
@@ -29,7 +28,7 @@ Ce projet a été développé avec une architecture moderne basée sur **FastAPI
 
 ---
 
-### 🖨️ Configuration d'impression
+### Configuration d'impression
 
 L'utilisateur peut choisir :
 
@@ -42,7 +41,7 @@ Le prix est recalculé automatiquement en temps réel sans rechargement de la pa
 
 ---
 
-### 📦 Gestion des commandes
+###  Gestion des commandes
 
 - Enregistrement des commandes
 - Association avec l'utilisateur connecté
@@ -52,7 +51,7 @@ Le prix est recalculé automatiquement en temps réel sans rechargement de la pa
 
 ---
 
-# 🏗️ Architecture
+#  Architecture
 
 ```
 .
@@ -80,7 +79,7 @@ Le prix est recalculé automatiquement en temps réel sans rechargement de la pa
 
 ---
 
-# 🛠️ Technologies utilisées
+#  Technologies utilisées
 
 ## Backend
 
@@ -111,9 +110,9 @@ Le prix est recalculé automatiquement en temps réel sans rechargement de la pa
 
 ---
 
-# 📌 Milestones
+#  Milestones
 
-## ✅ Milestone 1 — Authentification
+## Milestone 1 — Authentification
 
 Objectifs :
 
@@ -125,7 +124,7 @@ Objectifs :
 
 ---
 
-## ✅ Milestone 2 — Upload PDF
+## Milestone 2 — Upload PDF
 
 Objectifs :
 
@@ -136,7 +135,7 @@ Objectifs :
 
 ---
 
-## ✅ Milestone 3 — Configuration d'impression
+## Milestone 3 — Configuration d'impression
 
 Objectifs :
 
@@ -146,7 +145,7 @@ Objectifs :
 
 ---
 
-## ✅ Milestone 4 — Commandes
+## Milestone 4 — Commandes
 
 Objectifs :
 
@@ -157,7 +156,7 @@ Objectifs :
 
 ---
 
-# 🔒 Sécurité
+#  Sécurité
 
 Le projet applique plusieurs bonnes pratiques :
 
@@ -171,7 +170,7 @@ Le projet applique plusieurs bonnes pratiques :
 
 ---
 
-# ⚙️ Installation
+# Installation
 
 ## 1. Cloner le projet
 
@@ -253,7 +252,7 @@ http://localhost:3000
 
 ---
 
-# 🔄 API REST
+#  API REST
 
 ## Auth
 
@@ -281,7 +280,7 @@ http://localhost:3000
 
 ---
 
-# 🎨 Interface
+# Interface
 
 L'application propose une interface moderne comprenant :
 
@@ -293,55 +292,9 @@ L'application propose une interface moderne comprenant :
 - Validation de la commande
 - Notifications de succès et d'erreur
 
----
 
-# 📷 Captures d'écran
 
-Vous pouvez ajouter des captures telles que :
-
-```
-screenshots/
-
-├── login.png
-├── register.png
-├── upload.png
-├── pricing.png
-├── order-summary.png
-└── success.png
-```
-
----
-
-# ✅ Bonnes pratiques appliquées
-
-- Architecture modulaire
-- Séparation Backend / Frontend
-- API REST
-- Validation des données
-- Code maintenable
-- Organisation claire des dossiers
-- Gestion centralisée des appels API
-- Utilisation des composants React
-- Respect de la casse des fichiers
-- Messages d'erreur explicites
-- Expérience utilisateur fluide
-
----
-
-# 🚀 Perspectives d'amélioration
-
-- Paiement en ligne
-- Historique des commandes
-- Notifications par e-mail
-- Tableau de bord administrateur
-- Génération automatique de facture PDF
-- Déploiement Docker
-- CI/CD avec GitHub Actions
-- Stockage cloud des documents
-
----
-
-# 👨‍💻 Auteur
+#  Auteur
 
 Développé dans le cadre d'un test technique Full Stack.
 
@@ -357,6 +310,6 @@ Technologies principales :
 
 ---
 
-## 📄 Licence
+## Licence
 
 Ce projet est fourni à des fins de démonstration technique et d'évaluation des compétences Full Stack.
