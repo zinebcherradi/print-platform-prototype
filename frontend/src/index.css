@@ -42,7 +42,11 @@
   --transition: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   font-family: var(--font-sans);
@@ -51,6 +55,13 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-image: url('/public/assets/backgroud.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 /* Léger glow ambiant, discret, pas décoratif */
@@ -63,10 +74,21 @@ body::before {
   pointer-events: none;
 }
 
-code { font-family: var(--font-mono); }
+code {
+  font-family: var(--font-mono);
+}
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }
