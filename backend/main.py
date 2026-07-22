@@ -10,7 +10,7 @@ from jose import jwt, JWTError
 from models import Base, User, UserCreate, UserLogin, UserResponse, PrintOrder, OrderCreate, OrderResponse
 from security import verify_password, get_password_hash, create_access_token, SECRET_KEY, ALGORITHM
 
-# --- Configuration PostgreSQL ---
+
 DATABASE_URL = "postgresql://postgres:1234@localhost:5432/print_platform_db"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -52,18 +52,15 @@ def get_current_user(authorization: str = Header(...), db: Session = Depends(get
     except JWTError:
         raise HTTPException(status_code=401, detail="Token expiré ou invalide")
 
-# ==========================================
-# MILESTONE 1 : AUTHENTIFICATION
-# ==========================================
 @app.post("/register", response_model=UserResponse)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
     if db_user: 
         raise HTTPException(status_code=400, detail="Email déjà utilisé")
     
-    # ✅ CORRECTION ICI : On ajoute full_name lors de la création
+   
     new_user = User(
-        full_name=user.full_name,          # <--- AJOUTÉ
+        full_name=user.full_name,          
         email=user.email, 
         hashed_password=get_password_hash(user.password)
     )
@@ -80,9 +77,6 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     access_token = create_access_token(data={"sub": db_user.email, "id": db_user.id})
     return {"access_token": access_token, "token_type": "bearer"}
 
-# ==========================================
-# MILESTONE 2 : UPLOAD & ANALYSE PDF
-# ==========================================
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -103,9 +97,7 @@ async def upload_pdf(file: UploadFile = File(...)):
     
     return {"filename": file.filename, "num_pages": num_pages}
 
-# ==========================================
-# MILESTONE 3 : CALCUL DU PRIX
-# ==========================================
+
 PRICE_BW = 0.50
 PRICE_COLOR = 1.00
 
@@ -124,9 +116,7 @@ def calculate_price_endpoint(pages: int, mode: str):
         "total": total
     }
 
-# ==========================================
-# MILESTONE 4 : COMMANDE
-# ==========================================
+
 @app.post("/order", response_model=OrderResponse)
 def create_order(order: OrderCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     new_order = PrintOrder(
