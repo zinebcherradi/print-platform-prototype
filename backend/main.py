@@ -58,9 +58,16 @@ def get_current_user(authorization: str = Header(...), db: Session = Depends(get
 @app.post("/register", response_model=UserResponse)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
-    if db_user: raise HTTPException(status_code=400, detail="Email déjà utilisé")
+    if db_user: 
+        raise HTTPException(status_code=400, detail="Email déjà utilisé")
     
-    new_user = User(email=user.email, hashed_password=get_password_hash(user.password))
+    # ✅ CORRECTION ICI : On ajoute full_name lors de la création
+    new_user = User(
+        full_name=user.full_name,          # <--- AJOUTÉ
+        email=user.email, 
+        hashed_password=get_password_hash(user.password)
+    )
+    
     db.add(new_user); db.commit(); db.refresh(new_user)
     return new_user
 
@@ -97,15 +104,13 @@ async def upload_pdf(file: UploadFile = File(...)):
     return {"filename": file.filename, "num_pages": num_pages}
 
 # ==========================================
-# MILESTONE 3 : CALCUL DU PRIX (NOUVEAUX TARIFS)
+# MILESTONE 3 : CALCUL DU PRIX
 # ==========================================
-# ✅ TARIFS MIS À JOUR ICI
 PRICE_BW = 0.50
 PRICE_COLOR = 1.00
 
 @app.post("/calculate-price")
 def calculate_price_endpoint(pages: int, mode: str):
-    """Tâche #10 : Valide et calcule le prix officiel côté serveur"""
     if mode not in ["bw", "color"]:
         raise HTTPException(status_code=400, detail="Mode d'impression invalide")
     
@@ -124,7 +129,6 @@ def calculate_price_endpoint(pages: int, mode: str):
 # ==========================================
 @app.post("/order", response_model=OrderResponse)
 def create_order(order: OrderCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    """Enregistre la commande liée à l'utilisateur authentifié"""
     new_order = PrintOrder(
         user_id=current_user.id,
         filename=order.filename,
